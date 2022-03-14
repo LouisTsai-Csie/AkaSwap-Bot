@@ -57,4 +57,4 @@ def getBuyerListFile(address):
     file.close()
     return
 
-getBuyerListFile(address)
+#getBuyerListFile(address)
