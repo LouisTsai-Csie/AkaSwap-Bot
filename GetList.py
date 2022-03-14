@@ -1,8 +1,7 @@
-from lib2to3.pgen2 import token
 import requests
 import json
 
-address = 'tz1WRVgKHfkZvuEymYgHTFZ9ck5wNBQ4GQzC'
+#address = 'tz1WRVgKHfkZvuEymYgHTFZ9ck5wNBQ4GQzC'
 
 
 def getUserCreationUrl(address):
