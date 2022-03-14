@@ -10,10 +10,8 @@ from linebot.models import (
     MessageEvent, TextMessage, TextSendMessage,
 )
 
-
 ### Import外部檔案
 import config
-
 
 app = Flask(__name__)
 

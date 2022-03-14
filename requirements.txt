@@ -6,3 +6,4 @@ emoji
 pyshorteners
 requests
 gunicorn
+python
