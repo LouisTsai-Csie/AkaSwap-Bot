@@ -74,34 +74,17 @@ def userTokenListUpdate(user,tokenId):
     tokenList.tokenListUpdate(userAddr,tokenId)
     return
 
-def userModeUpdate(LineId,tokenId):
-    userAddrCond = {'LineId': LineId}
+def userModeUpdate(user,tokenId):
     return 
 
-def getUserAddr(LineId):
-    condition = {'LineId': LineId}
-    user = db.userInfo.find_one(condition)
-    if user is None:
-        return None
+def getUserAddr(user):
     return user['address']
 
-def getUserGmail(LineId):
-    condition = {'LineId': LineId}
-    user = db.userInfo.find_one(condition)
-    if user is None:
-        return None
+def getUserGmail(user):
     return user['gmail']
 
-def getUserMode(LineId):
-    condition = {'LineId': LineId}
-    user = db.userInfo.find_one(condition)
-    if user is None:
-        return None
+def getUserMode(user):
     return user['mode']
 
-def getUserState(LineId):
-    condition = {'LineId': LineId}
-    user = db.userInfo.find_one(condition)
-    if user is None:
-        return None
+def getUserState(user):
     return user['state']
