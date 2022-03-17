@@ -9,9 +9,13 @@ from linebot.exceptions import (
 from linebot.models import (
     MessageEvent, TextMessage, TextSendMessage,
 )
+### Import 套件
+import re
 
-### Import外部檔案
+### Import 外部檔案
 import config
+import state
+from mongoDB import mongoDB as db
 
 app = Flask(__name__)
 
@@ -23,7 +27,6 @@ handler = WebhookHandler(config.CHANNEL_ACESS_SECRET)
 def callback():
     # get X-Line-Signature header value
     signature = request.headers['X-Line-Signature']
-
     # get request body as text
     body = request.get_data(as_text=True)
     app.logger.info("Request body: " + body)
@@ -40,11 +43,44 @@ def callback():
 
 @handler.add(MessageEvent, message=TextMessage)
 def handle_message(event):
+    msg = str(event.message.text).upper().strip() # 使用者輸入的內容
     profile = line_bot_api.get_profile(event.source.user_id)
-    line_bot_api.reply_message(
-        event.reply_token,
-        TextSendMessage(text=event.message.text))
-    line_bot_api.push_message(profile.user_id,TextSendMessage(text='Hi'))
+    user_name = profile.display_name #使用者名稱
+    uid = profile.user_id # 發訊者ID
+
+    #檢查用戶是否存在
+    user = db.getUser(uid)
+    userMode = db.userInfo.getUserMode(user)
+    userState = db.userInfo.getUserState(user)
+
+    #=============================
+    if userMode == state.INIT_STATE:
+        if re.match("輸入地址",msg):
+            return
+        if re.match("輸入信箱",msg):
+            return
+        if re.match("作者追蹤",msg):
+            return
+        if re.match("買家資訊",msg):
+            return
+        if re.match("作品追蹤"):
+            return
+    
+    
+    
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 import os
