@@ -1,7 +1,7 @@
 import requests
 import json
 
-#address = 'tz1WRVgKHfkZvuEymYgHTFZ9ck5wNBQ4GQzC'
+address = 'tz1WRVgKHfkZvuEymYgHTFZ9ck5wNBQ4GQzC'
 
 def getUserCreationUrl(address):
     #https://akaswap.com/api/accounts/{address}/creations
@@ -35,7 +35,7 @@ def getAllCreationOwner(token):
     AkaObjOwnerDict = AkaObjData['owners']
     return AkaObjOwnerDict
 
-def _getBuyerList(address):
+def getBuyerList(address):
     BuyerList = {}
     tokenIdList = getAllCreationTokenId(address)
     for i in range(len(tokenIdList)):
@@ -49,12 +49,13 @@ def _getBuyerList(address):
     return BuyerList
 
 def getBuyerListFile(address):
-    BuyerList = _getBuyerList(address)
+    BuyerList = getBuyerList(address)
     fileName = 'BuyerList.json'
     file = open(fileName,"w")
     json.dump(BuyerList,file)
     file.close()
     return
 
-def getBuyerList():
-    return 0
+    
+
+getBuyerListFile(address)

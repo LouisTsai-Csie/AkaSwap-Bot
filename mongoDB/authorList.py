@@ -1,4 +1,3 @@
-from multiprocessing import Condition
 import pymongo as pg
 import userInfo
 import tokenList

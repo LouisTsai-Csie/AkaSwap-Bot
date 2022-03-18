@@ -11,11 +11,20 @@ from linebot.models import (
 )
 ### Import 套件
 import re
+import json
 
 ### Import 外部檔案
 import config
-import state
-from mongoDB import mongoDB as db
+import mode
+from mongoDB import (
+    authorList, buyerList, dataBase, tokenList, userInfo,
+)
+from template import (
+    basicInfo, buyerInfo
+) 
+from reply import (
+    reply, handle,
+)
 
 app = Flask(__name__)
 
@@ -49,28 +58,79 @@ def handle_message(event):
     uid = profile.user_id # 發訊者ID
 
     #檢查用戶是否存在
-    user = db.getUser(uid)
-    userMode = db.userInfo.getUserMode(user)
-    userState = db.userInfo.getUserState(user)
+    user = userInfo.getUser(uid)
+    userMode = userInfo.getUserMode(user)
+    userState = userInfo.getUserState(user)
 
     #=============================
-    if userMode == state.INIT_STATE:
-        if re.match("輸入地址",msg):
+    if userMode == mode.INIT_MODE:
+        if re.match("基本設定",msg):
+            content = basicInfo.basicInfo()
+            line_bot_api.push_message(uid,content)
             return
-        if re.match("輸入信箱",msg):
+        
+        elif re.match("輸入地址",msg):
+            userInfo.userModeUpdate(user,mode.ADDR_INPUT)
+            content = reply.addrInputMsg
+            line_bot_api.push_message(uid,TextSendMessage(content))
+            return 
+
+        elif re.match("輸入信箱",msg):
+            userInfo.userModeUpdate(user,mode.GMAIL_INPUT)
+            content = reply.gmailInputMsg
+            line_bot_api.push_message(uid,TextSendMessage(content))
             return
-        if re.match("作者追蹤",msg):
+        
+        elif re.match("輸入作者地址",msg):
+            userInfo.userModeUpdate(user,mode.AUTHORLIST_INPUT)
+            content = reply.authorInputMsg
+            line_bot_api.push_message(uid,TextSendMessage(content))
             return
+    
+        elif re.match("輸入作品ID",msg):
+            userInfo.userModeUpdate(user,mode.TOKENLIST_INPUT)
+            content = reply.tokenInputMsg
+            line_bot_api.push_message(uid,TextSendMessage(content))
+            return
+
         if re.match("買家資訊",msg):
+            content = buyerInfo.buyerInfo()
+            line_bot_api.push_message(uid,content)
             return
-        if re.match("作品追蹤"):
+        elif re.match("查詢最大買家",msg):
+            return 
+        elif re.match.match("輸入M值",msg):
             return
-    
-    
-    
+        elif re.match("輸入N值",msg):
+            return
 
+    elif userMode == mode.ADDR_INPUT:
+        userInfo.userModeUpdate(user,mode.INIT_MODE)
+        userInfo.userAddrUpdate(user,msg)
+        content = reply.InputCompleteMsg
+        line_bot_api.push_message(uid,TextSendMessage(content))
+        return 
+    
+    elif userMode == mode.GMAIL_INPUT:
+        userInfo.userModeUpdate(user,mode.INIT_MODE)
+        userInfo.userGmailUpdate(user,msg)
+        content = reply.InputCompleteMsg
+        line_bot_api.push_message(uid,TextSendMessage(content))
+        return
+    
+    elif userMode == mode.AUTHORLIST_INPUT:
+        userInfo.userModeUpdate(user,mode.INIT_MODE)
+        userInfo.userAuthorListUpdate(user,msg)
+        content = reply.InputCompleteMsg
+        line_bot_api.push_message(uid,TextSendMessage(content))
+        return
 
-
+    elif userMode == mode.TOKENLIST_INPUT:
+        userInfo.userModeUpdate(user,mode.INIT_MODE)
+        userInfo.userTokenListUpdate(user,int(msg))
+        content = reply.InputCompleteMsg
+        line_bot_api.push_message(uid,TextSendMessage(content))
+        return
 
 
 

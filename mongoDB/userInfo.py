@@ -1,5 +1,3 @@
-from lib2to3.pgen2 import token
-from multiprocessing import Condition
 import pymongo as pg
 import userInfo
 import tokenList
@@ -41,18 +39,47 @@ def getUser(LineId):
         return db.userInfo.find_one(condition)
     return user
 
+def getUserAddr(user):
+    return user['address']
+
+def getUserGmail(user):
+    return user['gmail']
+
+def getUserMode(user):
+    return user['mode']
+
+def getUserState(user):
+    return user['state']
+
+def getUserAutorList(user):
+    return user['authorList']
+
+def getUserTokenList(user):
+    return user['tokenList']
+
 def userAddrUpdate(user, address):
     condition = {'LineId': user['LineId']}
     option = {"$set": {"address": address}}
     db.userInfo.update_one(condition,option)
-    return 
-
+    return
 
 def userGmailUpdate(user,Gmail):
     condition = {'LineId': user['LineId']}
     option = {"$set": {"gmail": Gmail}}
     db.userInfo.update_one(condition,option)
     return 
+
+def userModeUpdate(user,mode):
+    condition = {'LineId': user['LineId']}
+    option = {"$set": {"mode": mode}}
+    db.userInfo.update_one(condition,option)
+    return 
+
+def userStateUpdate(user,state):
+    condition = {'LineId': user['LineId']}
+    option = {"$set": {"state": state}}
+    db.userInfo.update_one(condition,option)
+    return
 
 def userAuthorListUpdate(user,authorAddr):
     condition = {'LineId': user['LineId']}
@@ -74,17 +101,4 @@ def userTokenListUpdate(user,tokenId):
     tokenList.tokenListUpdate(userAddr,tokenId)
     return
 
-def userModeUpdate(user,tokenId):
-    return 
 
-def getUserAddr(user):
-    return user['address']
-
-def getUserGmail(user):
-    return user['gmail']
-
-def getUserMode(user):
-    return user['mode']
-
-def getUserState(user):
-    return user['state']
