@@ -99,7 +99,7 @@ def handle_message(event):
             return
         elif re.match("查詢最大買家",msg):
             return 
-        elif re.match.match("輸入M值",msg):
+        elif re.match("輸入M值",msg):
             return
         elif re.match("輸入N值",msg):
             return
