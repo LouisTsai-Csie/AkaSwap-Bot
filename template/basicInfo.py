@@ -50,3 +50,94 @@ def basicInfo():
         }
     )
     return content
+
+def userInfo(*arg):
+    
+    content = FlexSendMessage(
+        {
+            "type": "bubble",
+            "body": {
+                "type": "box",
+                "layout": "vertical",
+                "contents": [
+                {
+                    "type": "text",
+                    "text": "基本資訊",
+                    "contents": [
+                    {
+                        "type": "span",
+                        "text": "基本資訊"
+                    }
+                    ],
+                    "align": "center"
+                },
+                {
+                    "type": "text",
+                    "text": "地址：",
+                    "contents": [
+                    {
+                        "type": "span",
+                        "text": "地址："
+                    }
+                    ]
+                },
+                {
+                    "type": "text",
+                    "text": "hello, world",
+                    "contents": [
+                    {
+                        "type": "span",
+                        "text": "信箱："
+                    }
+                    ]
+                },
+                {
+                    "type": "text",
+                    "text": "hello, world",
+                    "contents": [
+                    {
+                        "type": "span",
+                        "text": "追蹤作者列表："
+                    }
+                    ]
+                },
+                {
+                    "type": "box",
+                    "layout": "vertical",
+                    "contents": [
+                    {
+                        "type": "text",
+                        "text": "-"
+                    }
+                    ]
+                },
+                {
+                    "type": "text",
+                    "text": "追蹤作品列表",
+                    "contents": [
+                    {
+                        "type": "span",
+                        "text": "追蹤作品列表"
+                    }
+                    ]
+                },
+                {
+                    "type": "box",
+                    "layout": "vertical",
+                    "contents": [
+                    {
+                        "type": "text",
+                        "text": "-"
+                    }
+                    ]
+                }
+                ]
+            },
+            "footer": {
+                "type": "box",
+                "layout": "vertical",
+                "contents": []
+            }
+        }
+    )
+    return content

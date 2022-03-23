@@ -103,7 +103,7 @@ def handle_message(event):
             return
         elif re.match("輸入N值",msg):
             return
-
+    '''
     elif userMode == mode.ADDR_INPUT:
         userInfo.userModeUpdate(user,mode.INIT_MODE)
         userInfo.userAddrUpdate(user,msg)
@@ -131,6 +131,7 @@ def handle_message(event):
         content = reply.InputCompleteMsg
         line_bot_api.push_message(uid,TextSendMessage(content))
         return
+    '''
 
 
 
