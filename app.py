@@ -16,7 +16,7 @@ from linebot.models import (
 ### Import 外部檔案
 import config
 #import mode
-from mongoDB import dataBase
+#from mongoDB import dataBase
 from mongoDB import userInfo
 from mongoDB import buyerList
 from mongoDB import tokenList
