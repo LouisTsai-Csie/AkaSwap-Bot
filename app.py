@@ -16,9 +16,7 @@ import json
 ### Import 外部檔案
 import config
 import mode
-from mongoDB import (
-    authorList, buyerList, dataBase, tokenList, userInfo,
-)
+from mongoDB.userInfo import*
 from template import (
     basicInfo, buyerInfo
 ) 
