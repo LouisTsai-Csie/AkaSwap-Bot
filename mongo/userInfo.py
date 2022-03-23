@@ -1,6 +1,6 @@
 
 import pymongo as pg
-import dbconnect as db
+from mongo import dataBase as db
 import authorList
 import tokenList
 '''
