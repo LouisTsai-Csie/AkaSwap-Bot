@@ -1,9 +1,9 @@
-'''
+
 import pymongo as pg
 import dataBase as db
 import authorList
 import tokenList
-
+'''
 userInfo = {
     '_id': string,
     'LineId': string,
@@ -14,7 +14,7 @@ userInfo = {
     'authorList':[address1, address2 -> string],
     'tokenList':[tokenId1, tokenId2 ->int]
 }
-
+'''
 def userInfoInit(LineId):
     userInfo = db.getUserInfoDB()
     Info = {
@@ -38,6 +38,8 @@ def getUser(LineId):
         return userInfo.find_one(condition)
     return user
 
+
+'''
 def getUserAddr(user):
     return user['address']
 
@@ -105,5 +107,5 @@ def userTokenListUpdate(user,tokenId):
     userAddr = user['address']
     tokenList.tokenListUpdate(userAddr,tokenId)
     return
-'''
 
+'''

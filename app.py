@@ -66,8 +66,8 @@ def handle_message(event):
     line_bot_api.push_message(uid,TextSendMessage(msg))
 
     #檢查用戶是否存在
-    '''
     user = userInfo.getUser(uid)
+    '''
     userMode = userInfo.getUserMode(user)
     userState = userInfo.getUserState(user)
     '''
