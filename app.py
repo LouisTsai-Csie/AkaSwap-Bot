@@ -10,19 +10,19 @@ from linebot.models import (
     MessageEvent, TextMessage, TextSendMessage,
 )
 ### Import 套件
-import re
-import json
+#import re
+#import json
 
 ### Import 外部檔案
 import config
-import mode
+#import mode
 from mongoDB.userInfo import*
-from template import (
-    basicInfo, buyerInfo
-) 
-from reply import (
-    reply, handle,
-)
+#from template import (
+#    basicInfo, buyerInfo
+#) 
+#from reply import (
+#    reply, handle,
+#)
 
 app = Flask(__name__)
 
