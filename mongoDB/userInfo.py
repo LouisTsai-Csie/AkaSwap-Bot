@@ -1,6 +1,6 @@
 
 import pymongo as pg
-import dataBase as db
+from dataBase import*
 import authorList
 import tokenList
 '''
@@ -16,7 +16,7 @@ userInfo = {
 }
 '''
 def userInfoInit(LineId):
-    userInfo = db.getUserInfoDB()
+    userInfo = getUserInfoDB()
     Info = {
         'LineId': LineId,
         'address': '',
@@ -30,7 +30,7 @@ def userInfoInit(LineId):
     return
 
 def getUser(LineId):
-    userInfo = db.getUserInfoDB()
+    userInfo = getUserInfoDB()
     condition = {'LineId': LineId}
     user = userInfo.find_one(condition)
     if user is None:
