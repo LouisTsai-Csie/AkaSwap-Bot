@@ -17,10 +17,10 @@ from linebot.models import (
 import config
 #import mode
 #from mongoDB import dataBase
-from mongoDB import userInfo
-from mongoDB import buyerList
-from mongoDB import tokenList
-from mongoDB import authorList
+from data import userInfo
+from data import buyerList
+from data import tokenList
+from data import authorList
 
 from akaSwap import buyerInfo
 
