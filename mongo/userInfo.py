@@ -1,8 +1,8 @@
 
 import pymongo as pg
 from mongo import dataBase as db
-import authorList
-import tokenList
+from mongo import authorList
+from mongo import tokenList
 '''
 userInfo = {
     '_id': string,
