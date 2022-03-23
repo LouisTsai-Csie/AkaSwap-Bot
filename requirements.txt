@@ -7,3 +7,4 @@ pyshorteners
 requests
 gunicorn
 pymongo
+dnspython
