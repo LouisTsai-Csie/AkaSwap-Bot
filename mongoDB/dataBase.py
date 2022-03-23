@@ -6,12 +6,22 @@ def connectDataBase():
     client = pg.MongoClient(CONNECTION_STRING,tlsCAFile=certifi.where())#,ssl=True)#,ssl_cert_reqs='CERT_NONE')
     return client['userList']
 
-dataBase = connectDataBase()
+def getUserInfoDB():
+    dataBase = connectDataBase()
+    return dataBase['userInfo']
 
-userInfo = dataBase['userInfo']
-buyerList = dataBase['buyerList']
-authorList = dataBase['authorList']
-tokenList = dataBase['tokenList']
+def getAuthorListDB():
+    dataBase = connectDataBase()
+    return dataBase['authorList']
+
+def getBuyerList():
+    dataBase = connectDataBase()
+    return dataBase['buyerList']
+
+def getTokenList():
+    dataBase = connectDataBase()
+    return dataBase['tokenList']
+
 
 
 

@@ -1,10 +1,5 @@
 import pymongo as pg
-import userInfo
-import tokenList
 import dataBase as db
-import buyerList
-import authorList
-import certifi
 '''
 authorList = {
     '_id': string,
@@ -16,30 +11,33 @@ authorList = {
 }
 '''
 def authorListInit(userAddr,authorAddr):
-    authorList = {
+    authorList = db.getAuthorListDB()
+    List = {
             'addressList': list(userAddr),
             'authorAddress': authorAddr,
             'init': False,
             'amount': 0,
             'tokenId': []
     }
-    db.authorList.insert_one(authorList)
+    authorList.insert_one(List)
     return
 
 def getAuthorList(userAddr,authorAddr):
+    authorList = db.getAuthorListDB()
     condition = {'authorAddress': authorAddr}
-    author = db.authorList.find_one(condition)
+    author = authorList.find_one(condition)
     if author is None:
         authorListInit(userAddr,authorAddr)
-        return db.authorList.find_one(condition)
+        return authorList.find_one(condition)
     return author
 
 
 def authorListUpdate(userAddr,authorAddr):
+    authorList = db.getAuthorListDB()
     condition = {'authorAddress': authorAddr}
-    authorList = getAuthorList(userAddr,authorAddr)
-    addressList = authorList['addressList']
+    author = getAuthorList(userAddr,authorAddr)
+    addressList = author['addressList']
     addressList.append(userAddr)
     option = {"$set": {"addressList": addressList}}
-    db.authorList.update_one(condition,option)
+    authorList.update_one(condition,option)
     return

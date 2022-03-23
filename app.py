@@ -16,13 +16,20 @@ from linebot.models import (
 ### Import 外部檔案
 import config
 #import mode
-from mongoDB.userInfo import*
-#from template import (
-#    basicInfo, buyerInfo
-#) 
-#from reply import (
-#    reply, handle,
-#)
+from mongoDB import dataBase
+from mongoDB import userInfo
+from mongoDB import buyerList
+from mongoDB import tokenList
+from mongoDB import authorList
+
+from akaSwap import buyerInfo
+from reply import handle
+from reply import reply
+
+from template import authorInfo
+from template import basicInfo
+from template import buyerInfo
+from template import tokenInfo
 
 app = Flask(__name__)
 
@@ -56,13 +63,12 @@ def handle_message(event):
     uid = profile.user_id # 發訊者ID
 
     line_bot_api.push_message(uid,TextSendMessage(msg))
-    return
-    '''
+
     #檢查用戶是否存在
     user = userInfo.getUser(uid)
     userMode = userInfo.getUserMode(user)
     userState = userInfo.getUserState(user)
-
+    '''
     #=============================
     if userMode == mode.INIT_MODE:
         if re.match("基本設定",msg):

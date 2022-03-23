@@ -1,5 +1,7 @@
 import pymongo as pg
 import dataBase as db
+import authorList
+import tokenList
 '''
 userInfo = {
     '_id': string,
@@ -14,7 +16,8 @@ userInfo = {
 '''
 
 def userInfoInit(LineId):
-    userInfo = {
+    userInfo = db.getUserInfoDB()
+    Info = {
         'LineId': LineId,
         'address': '',
         'gmail': '',
@@ -23,15 +26,16 @@ def userInfoInit(LineId):
         'authorList': [],
         'tokenList': []
     }
-    db.userInfo.insert_one(userInfo)
+    userInfo.insert_one(Info)
     return
 
 def getUser(LineId):
+    userInfo = db.getUserInfoDB()
     condition = {'LineId': LineId}
-    user = db.userInfo.find_one(condition)
+    user = userInfo.find_one(condition)
     if user is None:
         userInfoInit(LineId)
-        return db.userInfo.find_one(condition)
+        return userInfo.find_one(condition)
     return user
 
 def getUserAddr(user):
@@ -53,45 +57,51 @@ def getUserTokenList(user):
     return user['tokenList']
 
 def userAddrUpdate(user, address):
+    userInfo = db.getUserInfoDB()
     condition = {'LineId': user['LineId']}
     option = {"$set": {"address": address}}
-    db.userInfo.update_one(condition,option)
+    userInfo.update_one(condition,option)
     return
 
 def userGmailUpdate(user,Gmail):
+    userInfo = db.getUserInfoDB()
     condition = {'LineId': user['LineId']}
     option = {"$set": {"gmail": Gmail}}
-    db.userInfo.update_one(condition,option)
+    userInfo.update_one(condition,option)
     return 
 
 def userModeUpdate(user,mode):
+    userInfo = db.getUserInfoDB()
     condition = {'LineId': user['LineId']}
     option = {"$set": {"mode": mode}}
-    db.userInfo.update_one(condition,option)
+    userInfo.update_one(condition,option)
     return 
 
 def userStateUpdate(user,state):
+    userInfo = db.getUserInfoDB()
     condition = {'LineId': user['LineId']}
     option = {"$set": {"state": state}}
-    db.userInfo.update_one(condition,option)
+    userInfo.update_one(condition,option)
     return
 
 def userAuthorListUpdate(user,authorAddr):
+    userInfo = db.getUserInfoDB()
     condition = {'LineId': user['LineId']}
-    authorList = user['authorList']
-    authorList.append(authorAddr)
-    option = {"$set": {"authorList": authorList}}
-    db.userInfo.update_one(condition,option)
+    author = user['authorList']
+    author.append(authorAddr)
+    option = {"$set": {"authorList": author}}
+    userInfo.update_one(condition,option)
     userAddr = user['address']
     authorList.authorListUpdate(userAddr,authorAddr)
     return 
         
 def userTokenListUpdate(user,tokenId):
+    userInfo = db.getUserInfoDB()
     condition = {'LineId': user['LineId']}
-    tokenList = user['tokenList']
-    tokenList.append(tokenId)
-    option = {"$set": {"tokenList": tokenList}}
-    db.userInfo.update_one(condition,option)
+    token = user['tokenList']
+    token.append(tokenId)
+    option = {"$set": {"tokenList": token}}
+    userInfo.update_one(condition,option)
     userAddr = user['address']
     tokenList.tokenListUpdate(userAddr,tokenId)
     return
