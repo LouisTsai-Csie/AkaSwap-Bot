@@ -1,10 +1,5 @@
 import pymongo as pg
-import userInfo
-import tokenList
 import dataBase as db
-import buyerList
-import authorList
-import certifi
 '''
 userInfo = {
     '_id': string,
