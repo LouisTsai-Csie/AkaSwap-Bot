@@ -10,12 +10,12 @@ from linebot.models import (
     MessageEvent, TextMessage, TextSendMessage,
 )
 ### Import 套件
-#import re
+import re
 #import json
 
 ### Import 外部檔案
 import config
-#import mode
+import mode
 #from mongoDB import dataBase
 from mongo import userInfo
 from mongo import buyerList
@@ -67,18 +67,17 @@ def handle_message(event):
 
     #檢查用戶是否存在
     user = userInfo.getUser(uid)
-    '''
     userMode = userInfo.getUserMode(user)
     userState = userInfo.getUserState(user)
-    '''
-    '''
+
+    
     #=============================
     if userMode == mode.INIT_MODE:
         if re.match("基本設定",msg):
             content = basicInfo.basicInfo()
             line_bot_api.push_message(uid,content)
             return
-        
+    '''
         elif re.match("輸入地址",msg):
             userInfo.userModeUpdate(user,mode.ADDR_INPUT)
             content = reply.addrInputMsg
