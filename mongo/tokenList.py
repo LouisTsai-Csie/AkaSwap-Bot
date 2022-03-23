@@ -1,7 +1,6 @@
-'''
 import pymongo as pg
-import dataBase as db
-
+from mongo import dataBase as db
+'''
 tokenList = {
     '_id': string
     'addressList': [adress1, address2 ...]
@@ -10,7 +9,7 @@ tokenList = {
     'amount': int,
     'swapId': [swapId1, swapId2 ->int]
 }
-
+'''
 def tokenListInit(userAddr,tokenId):
     tokenList = db.getTokenList()
     List = {
@@ -41,4 +40,3 @@ def tokenListUpdate(userAddr,tokenId):
     option = {"$set": {"addressList": addressList}}
     tokenList.update_one(condition,option)
     return
-'''

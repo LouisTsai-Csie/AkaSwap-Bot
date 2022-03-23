@@ -38,8 +38,6 @@ def getUser(LineId):
         return userInfo.find_one(condition)
     return user
 
-
-'''
 def getUserAddr(user):
     return user['address']
 
@@ -107,5 +105,3 @@ def userTokenListUpdate(user,tokenId):
     userAddr = user['address']
     tokenList.tokenListUpdate(userAddr,tokenId)
     return
-
-'''
