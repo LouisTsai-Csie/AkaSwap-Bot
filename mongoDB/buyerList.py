@@ -1,5 +1,6 @@
-import pymongo as pg
 '''
+import pymongo as pg
+
 buyerList = {
     '_id': string,
     'address': string,
