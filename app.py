@@ -1,4 +1,3 @@
-from asyncio.windows_events import NULL
 from flask import Flask, request, abort
 
 from linebot import (
@@ -107,7 +106,7 @@ def handle_message(event):
         
         elif re.match("查詢最大買家",msg):
             userAddr = userInfo.getUserAddr(user)
-            if userAddr is NULL:
+            if not userAddr:
                 content = reply.userAddrLack
                 line_bot_api.push_message(uid,content)
             else:
@@ -116,7 +115,7 @@ def handle_message(event):
                 line_bot_api.push_message(uid,content)
 
         elif re.match("輸入N值",msg):
-            
+
             return
         elif re.match("輸入M值",msg):
 
@@ -157,8 +156,13 @@ def handle_message(event):
         line_bot_api.push_message(uid,TextSendMessage(content))
         return
 
+    ### 買家資訊查詢
+
+
     ### 功能導覽
     else:
+        content = reply.lostMsg
+        line_bot_api.push_message(uid,TextSendMessage(content))
         return
 
 
