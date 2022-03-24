@@ -77,7 +77,7 @@ def handle_message(event):
             content = basicInfo.basicInfo()
             line_bot_api.push_message(uid,content)
             return
-    '''
+
         elif re.match("輸入地址",msg):
             userInfo.userModeUpdate(user,mode.ADDR_INPUT)
             content = reply.addrInputMsg
@@ -112,8 +112,7 @@ def handle_message(event):
             return
         elif re.match("輸入N值",msg):
             return
-    '''
-    '''
+
     elif userMode == mode.ADDR_INPUT:
         userInfo.userModeUpdate(user,mode.INIT_MODE)
         userInfo.userAddrUpdate(user,msg)
@@ -141,7 +140,6 @@ def handle_message(event):
         content = reply.InputCompleteMsg
         line_bot_api.push_message(uid,TextSendMessage(content))
         return
-    '''
 
 
 

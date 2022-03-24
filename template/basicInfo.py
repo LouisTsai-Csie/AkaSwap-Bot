@@ -52,7 +52,7 @@ def basicInfo():
     )
     return content
 
-def userInfo(*arg):
+def userInfo():
     
     content = FlexSendMessage(
         {
