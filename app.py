@@ -68,6 +68,7 @@ def handle_message(event):
     
     #=============================
     if userMode == mode.INIT_MODE:
+        ### 基本資訊設定
         if re.match("基本設定",msg):
             content = flexHandler.basicInfo()
             line_bot_api.push_message(uid,content)
@@ -96,12 +97,13 @@ def handle_message(event):
             content = reply.tokenInputMsg
             line_bot_api.push_message(uid,TextSendMessage(content))
             return
-        '''
+        
+        ### 買家資訊查詢
         if re.match("買家資訊",msg):
             content = buyerInfo.buyerInfo()
             line_bot_api.push_message(uid,content)
             return
-        '''
+        
         if re.match("查詢最大買家",msg):
             return 
         elif re.match("輸入M值",msg):
@@ -109,6 +111,7 @@ def handle_message(event):
         elif re.match("輸入N值",msg):
             return
 
+    ### 基本資訊設定
     elif userMode == mode.ADDR_INPUT:
         userInfo.userModeUpdate(user,mode.INIT_MODE)
         userInfo.userAddrUpdate(user,msg)
@@ -137,7 +140,7 @@ def handle_message(event):
         line_bot_api.push_message(uid,TextSendMessage(content))
         return
 
-
+    ### 
 
 
 

@@ -1,7 +1,7 @@
 import requests
 import json
 
-address = 'tz1WRVgKHfkZvuEymYgHTFZ9ck5wNBQ4GQzC'
+address = 'tz1LBMHonxg8VuShNm6BJXKwWMUsDZ5cE2QB'
 
 def getUserCreationUrl(address):
     #https://akaswap.com/api/accounts/{address}/creations
