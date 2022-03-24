@@ -1,3 +1,4 @@
+from asyncio.windows_events import NULL
 from flask import Flask, request, abort
 
 from linebot import (
@@ -100,15 +101,31 @@ def handle_message(event):
         
         ### 買家資訊查詢
         if re.match("買家資訊",msg):
-            content = buyerInfo.buyerInfo()
+            content = flexHandler.buyerInfo()
             line_bot_api.push_message(uid,content)
             return
         
-        if re.match("查詢最大買家",msg):
-            return 
-        elif re.match("輸入M值",msg):
-            return
+        elif re.match("查詢最大買家",msg):
+            userAddr = userInfo.getUserAddr(user)
+            if userAddr is NULL:
+                content = reply.userAddrLack
+                line_bot_api.push_message(uid,content)
+            else:
+                buyerDict = buyerList.getMaxBuyerInfo(userAddr)
+                content = handle.maxBuyerInfo(buyerDict)
+                line_bot_api.push_message(uid,content)
+
         elif re.match("輸入N值",msg):
+            
+            return
+        elif re.match("輸入M值",msg):
+
+            return
+        elif re.match("查詢買家人數",msg):
+
+            return
+        elif re.match("查詢販售總數",msg):
+
             return
 
     ### 基本資訊設定
@@ -140,8 +157,9 @@ def handle_message(event):
         line_bot_api.push_message(uid,TextSendMessage(content))
         return
 
-    ### 
-
+    ### 功能導覽
+    else:
+        return
 
 
 

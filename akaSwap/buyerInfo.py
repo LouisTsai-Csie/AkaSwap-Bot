@@ -35,7 +35,7 @@ def getAllCreationOwner(token):
     AkaObjOwnerDict = AkaObjData['owners']
     return AkaObjOwnerDict
 
-def getBuyerList(address):
+def getBuyerDict(address):
     BuyerList = {}
     tokenIdList = getAllCreationTokenId(address)
     for i in range(len(tokenIdList)):
@@ -48,14 +48,12 @@ def getBuyerList(address):
                 BuyerList[CreationOwnerList[j]] += CreationOwnerDict[CreationOwnerList[j]]
     return BuyerList
 
-def getBuyerListFile(address):
-    BuyerList = getBuyerList(address)
+def getBuyerDictFile(address):
+    BuyerList = getBuyerDict(address)
     fileName = 'BuyerList.json'
     file = open(fileName,"w")
     json.dump(BuyerList,file)
     file.close()
     return
 
-    
-
-#getBuyerListFile(address)
+getBuyerDictFile(address)

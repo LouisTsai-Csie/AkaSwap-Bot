@@ -14,11 +14,11 @@ def getAuthorListDB():
     dataBase = connectDataBase()
     return dataBase['authorList']
 
-def getBuyerList():
+def getBuyerListDB():
     dataBase = connectDataBase()
     return dataBase['buyerList']
 
-def getTokenList():
+def getTokenListDB():
     dataBase = connectDataBase()
     return dataBase['tokenList']
 

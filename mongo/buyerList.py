@@ -1,13 +1,99 @@
 import pymongo as pg
+from mongo import dataBase as db
+from akaSwap import buyerInfo
 '''
 buyerList = {
     '_id': string,
     'address': string,
-    'maxBuyer': string,
-    'maxAmount': string,
-    'BuyerList': {
+    'sellNum': int,
+    'buyerNum': int,
+    'maxBuyerInfo': {
+        'maxBuyer': string,
+        'maxAmount': int
+    } ,
+    'buyerDict': {
         'address': string,
         'amount': int
     }
 }
 '''
+def buyerListInit(userAddr):
+    buyerList = db.getBuyerListDB()
+    List = {
+        'address': userAddr,
+        'sellNum': 0,
+        'buyerNum': 0,
+        'maxBuyerInfo': {},
+        'buyerDict': {}
+    }
+    buyerList.insert_one(List)
+    return
+
+def getBuyerList(userAddr):
+    buyerList = db.getBuyerListDB()
+    condition = {'address': userAddr}
+    buyer = buyerList.find_one(condition)
+    if buyer is None:
+        buyerListInit(userAddr)
+        buyerListUpdate(userAddr)
+        return buyerList.find_one(condition)
+    return buyer
+
+def buyerListUpdate(userAddr):
+    buyerList = db.getBuyerListDB()
+    condition = {'address': userAddr}
+    buyerDict = buyerInfo.getBuyerDict(userAddr)
+    maxBuyerAddr = ''
+    maxBuyerAmount = 0
+    maxBuyerDict = {}
+    _buyerList = list(buyerDict.keys())
+    sellNum = 0
+    for i in range(len(_buyerList)):
+        if buyerDict[_buyerList[i]] > maxBuyerAmount:
+            maxBuyerAddr = _buyerList[i]
+            maxBuyerAmount = buyerDict[_buyerList[i]]
+            maxBuyerDict.clear()
+            maxBuyerDict = {maxBuyerAddr: maxBuyerAmount}
+        elif buyerDict[_buyerList[i]] == maxBuyerAmount:
+            maxBuyerAddr = _buyerList[i]
+            maxBuyerAmount = buyerDict[_buyerList[i]]
+            maxBuyerDict.update({maxBuyerAddr: maxBuyerAmount})
+        sellNum += buyerDict[_buyerList[i]]
+    
+    option = {'$set': {'sellNum': sellNum}}
+    buyerList.update_one(condition,option)
+    option = {'$set': {'buyerNum': len(buyerDict)}}
+    buyerList.update_one(condition,option)
+    option = {'$set': {'maxBuyerInfo': maxBuyerDict}}
+    buyerList.update_one(condition,option)
+    option = {'$set': {'buyerDict': buyerDict}}
+    buyerList.update_one(condition,option)
+    return 
+
+def getMaxBuyerInfo(userAddr):
+    buyer = getBuyerList(userAddr)
+    return buyer['maxBuyerInfo']
+
+def getSellNum(userAddr):
+    buyer = getBuyerList(userAddr)
+    return buyer['sellNum']
+
+def getbuyerNum(userAddr):
+    buyer = getBuyerList(userAddr)
+    return buyer['buyerNum']
+
+def getMaxBuyerInfo(userAddr):
+    buyer = getBuyerList(userAddr)
+    return buyer['maxBuyerInfo']
+
+def getNBuyer(userAddr,N):
+    buyer = getBuyerList(userAddr)
+    buyerDict = buyer['buyerDict']
+    if len(buyerDict) <= N:
+        return buyerDict
+    sortedbuyerDict = dict(sorted(buyerDict.items(), key=lambda item: item[1]))
+    resDict = {}
+    for i in range(N):
+        resDict.update(sortedbuyerDict[i]) 
+    return resDict
+

@@ -1,0 +1,54 @@
+{
+    "type": "bubble",
+    "body": {
+      "type": "box",
+      "layout": "vertical",
+      "contents": [
+        {
+          "type": "text",
+          "text": "買家資訊查詢",
+          "align": "center"
+        },
+        {
+          "type": "button",
+          "action": {
+            "type": "message",
+            "label": "最大數量買家",
+            "text": "查詢最大買家"
+          }
+        },
+        {
+          "type": "button",
+          "action": {
+            "type": "message",
+            "label": "數量前N大買家",
+            "text": "輸入N值"
+          }
+        },
+        {
+          "type": "button",
+          "action": {
+            "type": "message",
+            "label": "數量超過M件買家",
+            "text": "輸入M值"
+          }
+        },
+        {
+          "type": "button",
+          "action": {
+            "type": "message",
+            "label": "買家人數",
+            "text": "查詢買家人數"
+          }
+        },
+        {
+          "type": "button",
+          "action": {
+            "type": "message",
+            "label": "販售總數",
+            "text": "查詢販售總數"
+          }
+        }
+      ]
+    }
+  }

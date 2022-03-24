@@ -11,7 +11,7 @@ tokenList = {
 }
 '''
 def tokenListInit(tokenId):
-    tokenList = db.getTokenList()
+    tokenList = db.getTokenListDB()
     List = {
             'addressList': [],
             'init': False,
