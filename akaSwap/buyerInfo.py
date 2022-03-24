@@ -56,4 +56,3 @@ def getBuyerDictFile(address):
     file.close()
     return
 
-getBuyerDictFile(address)
