@@ -27,10 +27,7 @@ from akaSwap import buyerInfo
 from reply import handle
 from reply import reply
 
-from template import authorInfo
-from template import basicInfo
-from template import buyerInfo
-from template import tokenInfo
+from template import flexHandler
 
 app = Flask(__name__)
 
@@ -72,7 +69,7 @@ def handle_message(event):
     #=============================
     if userMode == mode.INIT_MODE:
         if re.match("基本設定",msg):
-            content = basicInfo.basicInfo()
+            content = flexHandler.basicInfo()
             line_bot_api.push_message(uid,content)
             return
 
@@ -99,13 +96,13 @@ def handle_message(event):
             content = reply.tokenInputMsg
             line_bot_api.push_message(uid,TextSendMessage(content))
             return
-
+        '''
         if re.match("買家資訊",msg):
             content = buyerInfo.buyerInfo()
             line_bot_api.push_message(uid,content)
             return
-            
-        elif re.match("查詢最大買家",msg):
+        '''
+        if re.match("查詢最大買家",msg):
             return 
         elif re.match("輸入M值",msg):
             return
