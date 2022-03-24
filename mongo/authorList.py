@@ -12,8 +12,10 @@ authorList = {
 '''
 def authorListInit(userAddr,authorAddr):
     authorList = db.getAuthorListDB()
+    addr = []
+    addr.append(userAddr)
     List = {
-            'addressList': list(userAddr),
+            'addressList': addr,
             'authorAddress': authorAddr,
             'init': False,
             'amount': 0,

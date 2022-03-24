@@ -12,8 +12,10 @@ tokenList = {
 '''
 def tokenListInit(userAddr,tokenId):
     tokenList = db.getTokenList()
+    addr = []
+    addr.append(userAddr)
     List = {
-            'addressList': list(userAddr),
+            'addressList': addr,
             'init': False,
             'tokenId': tokenId,
             'amount': 0,

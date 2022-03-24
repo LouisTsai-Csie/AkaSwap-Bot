@@ -1,4 +1,5 @@
 from linebot.models import FlexSendMessage
+#json.load(open(encoding="UTF-8"))
 def basicInfo():
     content = FlexSendMessage(
         alt_text= '基本設定',

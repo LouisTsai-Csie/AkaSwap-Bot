@@ -63,8 +63,6 @@ def handle_message(event):
     user_name = profile.display_name #使用者名稱
     uid = profile.user_id # 發訊者ID
 
-    line_bot_api.push_message(uid,TextSendMessage(msg))
-
     #檢查用戶是否存在
     user = userInfo.getUser(uid)
     userMode = userInfo.getUserMode(user)
@@ -106,6 +104,7 @@ def handle_message(event):
             content = buyerInfo.buyerInfo()
             line_bot_api.push_message(uid,content)
             return
+            
         elif re.match("查詢最大買家",msg):
             return 
         elif re.match("輸入M值",msg):
