@@ -112,7 +112,7 @@ def handle_message(event):
             else:
                 buyerDict = buyerList.getMaxBuyerInfo(userAddr)
                 content = handle.maxBuyerInfo(buyerDict)
-                line_bot_api.push_message(uid,content)
+                line_bot_api.push_message(uid,TextSendMessage(content))
 
         elif re.match("輸入N值",msg):
 
@@ -125,6 +125,12 @@ def handle_message(event):
             return
         elif re.match("查詢販售總數",msg):
 
+            return
+
+        ### 功能導覽
+        else:
+            content = reply.lostMsg
+            line_bot_api.push_message(uid,TextSendMessage(content))
             return
 
     ### 基本資訊設定
@@ -159,11 +165,8 @@ def handle_message(event):
     ### 買家資訊查詢
 
 
-    ### 功能導覽
-    else:
-        content = reply.lostMsg
-        line_bot_api.push_message(uid,TextSendMessage(content))
-        return
+
+
 
 
 
