@@ -10,12 +10,10 @@ tokenList = {
     'swapId': [swapId1, swapId2 ->int]
 }
 '''
-def tokenListInit(userAddr,tokenId):
+def tokenListInit(tokenId):
     tokenList = db.getTokenList()
-    addr = []
-    addr.append(userAddr)
     List = {
-            'addressList': addr,
+            'addressList': [],
             'init': False,
             'tokenId': tokenId,
             'amount': 0,
@@ -24,19 +22,19 @@ def tokenListInit(userAddr,tokenId):
     tokenList.insert_one(List)
     return
 
-def getTokenList(userAddr,tokenId):
+def getTokenList(tokenId):
     tokenList = db.getTokenList()
     condition = {'tokenId': tokenId}
     token = tokenList.find_one(condition)
     if token is None:
-        tokenListInit(userAddr,tokenId)
+        tokenListInit(tokenId)
         return tokenList.find_one(condition)
     return token
 
 def tokenListUpdate(userAddr,tokenId):
     tokenList = db.getTokenList()
     condition = {'tokenId': tokenId}
-    token = getTokenList(userAddr,tokenId)
+    token = getTokenList(tokenId)
     addressList = token['addressList']
     addressList.append(userAddr)
     option = {"$set": {"addressList": addressList}}

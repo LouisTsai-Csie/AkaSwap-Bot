@@ -10,12 +10,10 @@ authorList = {
     'tokenId': [tokenId1, tokenId2 ->int]
 }
 '''
-def authorListInit(userAddr,authorAddr):
+def authorListInit(authorAddr):
     authorList = db.getAuthorListDB()
-    addr = []
-    addr.append(userAddr)
     List = {
-            'addressList': addr,
+            'addressList': [],
             'authorAddress': authorAddr,
             'init': False,
             'amount': 0,
@@ -24,12 +22,12 @@ def authorListInit(userAddr,authorAddr):
     authorList.insert_one(List)
     return
 
-def getAuthorList(userAddr,authorAddr):
+def getAuthorList(authorAddr):
     authorList = db.getAuthorListDB()
     condition = {'authorAddress': authorAddr}
     author = authorList.find_one(condition)
     if author is None:
-        authorListInit(userAddr,authorAddr)
+        authorListInit(authorAddr)
         return authorList.find_one(condition)
     return author
 
@@ -37,7 +35,7 @@ def getAuthorList(userAddr,authorAddr):
 def authorListUpdate(userAddr,authorAddr):
     authorList = db.getAuthorListDB()
     condition = {'authorAddress': authorAddr}
-    author = getAuthorList(userAddr,authorAddr)
+    author = getAuthorList(authorAddr)
     addressList = author['addressList']
     addressList.append(userAddr)
     option = {"$set": {"addressList": addressList}}
