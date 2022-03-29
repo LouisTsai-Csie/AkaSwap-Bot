@@ -207,12 +207,12 @@ def handle_message(event):
 
         userAddr = userInfo.getUserAddr(user)
         if userState == state.NVAL_INPUT:
-            buyerDict = buyerList.getNBuyer(userAddr,msg)
+            buyerDict = buyerList.getNBuyer(userAddr,int(msg))
             content = handle.Nbuyer(buyerDict)
             line_bot_api.push_message(uid,TextSendMessage(content))
 
         elif userState == state.MVAL_INPUT:
-            buyerDict = buyerList.getMBuyer(userAddr,msg)
+            buyerDict = buyerList.getMBuyer(userAddr,int(msg))
             content = handle.Mbuyer(buyerDict)
             line_bot_api.push_message(uid,TextSendMessage(content))
 
