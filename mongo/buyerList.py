@@ -89,6 +89,7 @@ def getMaxBuyerInfo(userAddr):
     return buyer['maxBuyerInfo']
 
 def getNBuyer(userAddr,N):
+    N = int(N) if isinstance(N ,str) else N
     buyer = getBuyerList(userAddr)
     buyerDict = buyer['buyerDict']
     if len(buyerDict) <= N:
@@ -101,6 +102,7 @@ def getNBuyer(userAddr,N):
     return resDict
 
 def getMBuyer(userAddr,M):
+    M = int(M) if isinstance(M ,str) else M
     buyer = getBuyerList(userAddr)
     resDict = {}
     for key, value in buyer.items():

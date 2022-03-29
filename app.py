@@ -1,3 +1,5 @@
+from lib2to3.pgen2 import token
+from typing import Text
 from flask import Flask, request, abort
 
 from linebot import (
@@ -68,6 +70,16 @@ def handle_message(event):
 
     #=============================
     if userMode == mode.INIT_MODE:
+        ### 資訊查詢
+        if re.match("資料查詢",msg):
+            address = userInfo.getUserAddr(user)
+            Gmail = userInfo.getUserGmail(user)
+            authorList = userInfo.getUserAutorList(user)
+            tokenList = userInfo.getUserTokenList(user)
+            content = handle.basicInfo(address,Gmail,authorList,tokenList)
+            line_bot_api.push_message(uid,TextSendMessage(content))
+            return
+
         ### 基本資訊設定
         if re.match("基本設定",msg):
             content = flexHandler.basicInfo()
@@ -195,12 +207,12 @@ def handle_message(event):
 
         userAddr = userInfo.getUserAddr(user)
         if userState == state.NVAL_INPUT:
-            buyerDict = buyerList.getNBuyer(userAddr,int(msg))
+            buyerDict = buyerList.getNBuyer(userAddr,msg)
             content = handle.Nbuyer(buyerDict)
             line_bot_api.push_message(uid,TextSendMessage(content))
 
         elif userState == state.MVAL_INPUT:
-            buyerDict = buyerList.getMBuyer(userAddr,int(msg))
+            buyerDict = buyerList.getMBuyer(userAddr,msg)
             content = handle.Mbuyer(buyerDict)
             line_bot_api.push_message(uid,TextSendMessage(content))
 
