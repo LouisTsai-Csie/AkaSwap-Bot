@@ -37,10 +37,10 @@ def basicInfo(address,Gmail,authorList,tokenList):
 
     content += '\n您的追蹤作者清單:\n'
     for i in range(len(authorList)):
-        content += str(i) +'. ' +str(authorList[i]) + '\n'
+        content += str(i+1) +'. ' +str(authorList[i]) + '\n'
     
     content += '\n您的追蹤作品清單:\n'
     for i in range(len(tokenList)):
-        content += str(i) +'. ' + str(tokenList[i]) + '\n'
+        content += str(i+1) +'. ' + str(tokenList[i]) + '\n'
     
     return content
