@@ -30,8 +30,8 @@ def Mbuyer(buyerDict):
     return content
 
 def basicInfo(address,Gmail,authorList,tokenList):
-    content = '您的基本資訊如下:\n'
-    content += '您的錢包地址:\n' + address +'\n'
+    content = '您的基本資訊如下:\n\n'
+    content += '您的錢包地址:\n' + address +'\n\n'
     content += '您的電子郵件信箱:\n' + Gmail + '\n'
 
     content += '\n您的追蹤作者清單如下:\n'

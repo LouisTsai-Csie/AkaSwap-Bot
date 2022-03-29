@@ -1,7 +1,7 @@
 from posixpath import split
 import pymongo as pg
-from mongo import dataBase as db
-from mongo import buyerInfo
+import dataBase as db
+import buyerInfo
 #from akaSwap import buyerInfo
 '''
 buyerList = {
@@ -57,7 +57,11 @@ def buyerListUpdate(userAddr):
     buyerList.update_one(condition,option)
     option = {'$set': {'maxBuyerInfo': maxBuyerDict}}
     buyerList.update_one(condition,option)
-    option = {'$set': {'buyerDict': buyerDict}}
+    sortedBuyerList = sorted(buyerDict.items(), key=lambda item: item[1],reverse=True)
+    resDict = {}
+    for i in range(len(sortedBuyerList)):
+        resDict.update({sortedBuyerList[i][0]:sortedBuyerList[i][1]})
+    option = {'$set': {'buyerDict': resDict}}
     buyerList.update_one(condition,option)
     return 
 
@@ -88,24 +92,30 @@ def getMaxBuyerInfo(userAddr):
     buyer = getBuyerList(userAddr)
     return buyer['maxBuyerInfo']
 
+def getBuyerDict(userAddr):
+    buyer = getBuyerList(userAddr)
+    return buyer['buyerDict']
+
 def getNBuyer(userAddr,N):
     N = int(N) if isinstance(N ,str) else N
-    buyer = getBuyerList(userAddr)
-    buyerDict = buyer['buyerDict']
+    buyerDict = getBuyerDict(userAddr)
     if len(buyerDict) <= N:
         return buyerDict
-    
-    sortedbuyerDict = sorted(buyerDict.items(), key=lambda item: item[1],reverse=True)
     resDict = {}
-    for i in range(N):
-        resDict.update({sortedbuyerDict[i][0]:sortedbuyerDict[i][1]})
+
+    count = 0
+    for key, val in buyerDict.items():
+        count += 1
+        if count > N:
+            break
+        resDict.update({key:val})
     return resDict
 
 def getMBuyer(userAddr,M):
     M = int(M) if isinstance(M ,str) else M
-    buyer = getBuyerList(userAddr)
+    buyerDict = getBuyerDict(userAddr)
     resDict = {}
-    for key, value in buyer.items():
-        if int(value) >= M:
-            resDict.update({key:value})
+    for key, val in buyerDict.items():
+        if val>=M:
+            resDict.update({key:val})
     return resDict
