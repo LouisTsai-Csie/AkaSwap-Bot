@@ -1,5 +1,4 @@
-from posixpath import split
-from mongo import pymongo as pg
+import pymongo as pg
 from mongo import dataBase as db
 from mongo import buyerInfo
 #from akaSwap import buyerInfo
