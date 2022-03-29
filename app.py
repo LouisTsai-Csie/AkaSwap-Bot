@@ -71,7 +71,7 @@ def handle_message(event):
     #=============================
     if userMode == mode.INIT_MODE:
         ### 資訊查詢
-        if re.match("資料查詢",msg):
+        if re.match("資訊查詢",msg):
             address = userInfo.getUserAddr(user)
             Gmail = userInfo.getUserGmail(user)
             authorList = userInfo.getUserAutorList(user)
@@ -204,8 +204,8 @@ def handle_message(event):
 
     ### 買家資訊查詢
     elif userMode == mode.VALUE_INPUT:
-
         userAddr = userInfo.getUserAddr(user)
+        userInfo.userModeUpdate(user,mode.INIT_MODE)
         if userState == state.NVAL_INPUT:
             buyerDict = buyerList.getNBuyer(userAddr,int(msg))
             content = handle.Nbuyer(buyerDict)
@@ -215,10 +215,7 @@ def handle_message(event):
             buyerDict = buyerList.getMBuyer(userAddr,int(msg))
             content = handle.Mbuyer(buyerDict)
             line_bot_api.push_message(uid,TextSendMessage(content))
-
-        userInfo.userModeUpdate(user,mode.INIT_MODE)
         userInfo.userStateUpdate(user,state.INIT_STATE)
-
         return
 
 import os

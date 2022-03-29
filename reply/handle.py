@@ -31,14 +31,14 @@ def Mbuyer(buyerDict):
 
 def basicInfo(address,Gmail,authorList,tokenList):
     content = '您的基本資訊如下:\n'
-    content += '您的錢包地址:' + address +'\n'
-    content += '您的電子郵件信箱' + Gmail + '\n'
+    content += '您的錢包地址:\n' + address +'\n'
+    content += '您的電子郵件信箱:\n' + Gmail + '\n'
 
     content += '\n您的追蹤作者清單如下:\n'
     for i in range(len(authorList)):
         content += str(authorList[i]) + '\n'
     
-    content += '\n您的追蹤作品清單如下:'
+    content += '\n您的追蹤作品清單如下:\n'
     for i in range(len(tokenList)):
         content += str(tokenList[i]) + '\n'
     

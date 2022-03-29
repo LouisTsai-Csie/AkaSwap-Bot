@@ -106,6 +106,6 @@ def getMBuyer(userAddr,M):
     buyer = getBuyerList(userAddr)
     resDict = {}
     for key, value in buyer.items():
-        if value >= M:
+        if int(value) >= M:
             resDict.update({key:value})
     return resDict
