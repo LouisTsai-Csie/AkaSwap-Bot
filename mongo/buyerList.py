@@ -1,6 +1,8 @@
+from posixpath import split
 import pymongo as pg
 from mongo import dataBase as db
-from akaSwap import buyerInfo
+from mongo import buyerInfo
+#from akaSwap import buyerInfo
 '''
 buyerList = {
     '_id': string,
@@ -29,16 +31,6 @@ def buyerListInit(userAddr):
     buyerList.insert_one(List)
     return
 
-def getBuyerList(userAddr):
-    buyerList = db.getBuyerListDB()
-    condition = {'address': userAddr}
-    buyer = buyerList.find_one(condition)
-    if buyer is None:
-        buyerListInit(userAddr)
-        buyerListUpdate(userAddr)
-        return buyerList.find_one(condition)
-    return buyer
-
 def buyerListUpdate(userAddr):
     buyerList = db.getBuyerListDB()
     condition = {'address': userAddr}
@@ -59,7 +51,6 @@ def buyerListUpdate(userAddr):
             maxBuyerAmount = buyerDict[_buyerList[i]]
             maxBuyerDict.update({maxBuyerAddr: maxBuyerAmount})
         sellNum += buyerDict[_buyerList[i]]
-    
     option = {'$set': {'sellNum': sellNum}}
     buyerList.update_one(condition,option)
     option = {'$set': {'buyerNum': len(buyerDict)}}
@@ -70,15 +61,26 @@ def buyerListUpdate(userAddr):
     buyerList.update_one(condition,option)
     return 
 
+def getBuyerList(userAddr):
+    buyerList = db.getBuyerListDB()
+    condition = {'address': userAddr}
+    buyer = buyerList.find_one(condition)
+    if buyer is None:
+        buyerListInit(userAddr)
+        buyerListUpdate(userAddr)
+        return buyerList.find_one(condition)
+    return buyer
+
 def getMaxBuyerInfo(userAddr):
     buyer = getBuyerList(userAddr)
     return buyer['maxBuyerInfo']
+
 
 def getSellNum(userAddr):
     buyer = getBuyerList(userAddr)
     return buyer['sellNum']
 
-def getbuyerNum(userAddr):
+def getBuyerNum(userAddr):
     buyer = getBuyerList(userAddr)
     return buyer['buyerNum']
 
@@ -91,9 +93,17 @@ def getNBuyer(userAddr,N):
     buyerDict = buyer['buyerDict']
     if len(buyerDict) <= N:
         return buyerDict
-    sortedbuyerDict = dict(sorted(buyerDict.items(), key=lambda item: item[1]))
+    
+    sortedbuyerDict = sorted(buyerDict.items(), key=lambda item: item[1],reverse=True)
     resDict = {}
     for i in range(N):
-        resDict.update(sortedbuyerDict[i]) 
+        resDict.update({sortedbuyerDict[i][0]:sortedbuyerDict[i][1]})
     return resDict
 
+def getMBuyer(userAddr,M):
+    buyer = getBuyerList(userAddr)
+    resDict = {}
+    for key, value in buyer.items():
+        if value >= M:
+            resDict.update({key:value})
+    return resDict

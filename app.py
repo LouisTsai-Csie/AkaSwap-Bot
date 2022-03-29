@@ -16,13 +16,14 @@ import re
 ### Import 外部檔案
 import config
 import mode
+import state
 #from mongoDB import dataBase
 from mongo import userInfo
 from mongo import buyerList
 from mongo import tokenList
 from mongo import authorList
 
-from akaSwap import buyerInfo
+from mongo import buyerInfo
 
 from reply import handle
 from reply import reply
@@ -65,7 +66,6 @@ def handle_message(event):
     userMode = userInfo.getUserMode(user)
     userState = userInfo.getUserState(user)
 
-    
     #=============================
     if userMode == mode.INIT_MODE:
         ### 基本資訊設定
@@ -108,23 +108,51 @@ def handle_message(event):
             userAddr = userInfo.getUserAddr(user)
             if not userAddr:
                 content = reply.userAddrLack
-                line_bot_api.push_message(uid,content)
+                line_bot_api.push_message(uid,TextSendMessage(content))
             else:
                 buyerDict = buyerList.getMaxBuyerInfo(userAddr)
                 content = handle.maxBuyerInfo(buyerDict)
                 line_bot_api.push_message(uid,TextSendMessage(content))
+            return
 
         elif re.match("輸入N值",msg):
-
+            userAddr = userInfo.getUserAddr(user)
+            if userAddr:
+                userInfo.userModeUpdate(user,mode.VALUE_INPUT)
+                userInfo.userStateUpdate(user,state.MVAL_INPUT)
+            content = reply.valueInputMsg if userAddr else reply.userAddrLack
+            line_bot_api.push_message(uid,TextSendMessage(content))
             return
+
         elif re.match("輸入M值",msg):
-
+            userAddr = userInfo.getUserAddr(user)
+            if userAddr:
+                userInfo.userModeUpdate(user,mode.VALUE_INPUT)
+                userInfo.userStateUpdate(user,state.MVAL_INPUT)
+            content = reply.valueInputMsg if userAddr else reply.userAddrLack
+            line_bot_api.push_message(uid,TextSendMessage(content))
             return
+
         elif re.match("查詢買家人數",msg):
-
+            userAddr = userInfo.getUserAddr(user)
+            if not userAddr:
+                content = reply.userAddrLack
+                line_bot_api.push_message(uid,TextSendMessage(content))
+            else:
+                num = buyerList.getBuyerNum(userAddr)
+                content = handle.buyerNum(num)
+                line_bot_api.push_message(uid,TextSendMessage(content))
             return
+            
         elif re.match("查詢販售總數",msg):
-
+            userAddr = userInfo.getUserAddr(user)
+            if not userAddr:
+                content = reply.userAddrLack
+                line_bot_api.push_message(uid,TextSendMessage(content))
+            else:
+                num = buyerList.getSellNum(userAddr)
+                content = handle.sellNum(num)
+                line_bot_api.push_message(uid,TextSendMessage(content))
             return
 
         ### 功能導覽
@@ -163,18 +191,23 @@ def handle_message(event):
         return
 
     ### 買家資訊查詢
+    elif userMode == mode.VALUE_INPUT:
 
+        userAddr = userInfo.getUserAddr(user)
+        if userState == state.NVAL_INPUT:
+            buyerDict = buyerList.getNBuyer(userAddr,int(msg))
+            content = handle.Nbuyer(buyerDict)
+            line_bot_api.push_message(uid,TextSendMessage(content))
 
+        elif userState == state.MVAL_INPUT:
+            buyerDict = buyerList.getMBuyer(userAddr,int(msg))
+            content = handle.Mbuyer(buyerDict)
+            line_bot_api.push_message(uid,TextSendMessage(content))
 
+        userInfo.userModeUpdate(user,mode.INIT_MODE)
+        userInfo.userStateUpdate(user,state.INIT_STATE)
 
-
-
-
-
-
-
-
-
+        return
 
 import os
 if __name__ == "__main__":

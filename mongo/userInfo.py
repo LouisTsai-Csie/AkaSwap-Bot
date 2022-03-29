@@ -1,4 +1,3 @@
-
 import pymongo as pg
 from mongo import dataBase as db
 from mongo import authorList
