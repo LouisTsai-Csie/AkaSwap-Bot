@@ -131,7 +131,7 @@ def handle_message(event):
             userAddr = userInfo.getUserAddr(user)
             if userAddr:
                 userInfo.userModeUpdate(user,mode.VALUE_INPUT)
-                userInfo.userStateUpdate(user,state.MVAL_INPUT)
+                userInfo.userStateUpdate(user,state.NVAL_INPUT)
             content = reply.valueInputMsg if userAddr else reply.userAddrLack
             line_bot_api.push_message(uid,TextSendMessage(content))
             return

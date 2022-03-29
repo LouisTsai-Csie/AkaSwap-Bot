@@ -5,6 +5,7 @@ def maxBuyerInfo(maxBuyerDict):
     for key in maxBuyerDict.keys():
         content += key
         content += '\n'
+    content += '\n'
     num = list(maxBuyerDict.values())[0]
     content += (str(len(maxBuyerDict))+ '位買家每人購買了' + str(num) + '件您的作品')
     return content

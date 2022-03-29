@@ -105,7 +105,7 @@ def getNBuyer(userAddr,N):
     count = 0
     for key, val in buyerDict.items():
         count += 1
-        if count > N:
+        if count >= N:
             break
         resDict.update({key:val})
     return resDict
