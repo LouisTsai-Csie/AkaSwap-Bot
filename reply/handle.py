@@ -7,7 +7,7 @@ def maxBuyerInfo(maxBuyerDict):
         content += '\n'
     content += '\n'
     num = list(maxBuyerDict.values())[0]
-    content += (str(len(maxBuyerDict))+ '位買家每人購買了' + str(num) + '件您的作品')
+    content += '共' + (str(len(maxBuyerDict))+ '位買家每人購買了' + str(num) + '件您的作品')
     return content
 
 def buyerNum(num):
@@ -35,12 +35,12 @@ def basicInfo(address,Gmail,authorList,tokenList):
     content += '您的錢包地址:\n' + address +'\n\n'
     content += '您的電子郵件信箱:\n' + Gmail + '\n'
 
-    content += '\n您的追蹤作者清單如下:\n'
+    content += '\n您的追蹤作者清單:\n'
     for i in range(len(authorList)):
-        content += str(authorList[i]) + '\n'
+        content += str(i) +'. ' +str(authorList[i]) + '\n'
     
-    content += '\n您的追蹤作品清單如下:\n'
+    content += '\n您的追蹤作品清單:\n'
     for i in range(len(tokenList)):
-        content += str(tokenList[i]) + '\n'
+        content += str(i) +'. ' + str(tokenList[i]) + '\n'
     
     return content
