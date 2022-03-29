@@ -1,7 +1,7 @@
 from posixpath import split
-import pymongo as pg
-import dataBase as db
-import buyerInfo
+from mongo import pymongo as pg
+from mongo import dataBase as db
+from mongo import buyerInfo
 #from akaSwap import buyerInfo
 '''
 buyerList = {
